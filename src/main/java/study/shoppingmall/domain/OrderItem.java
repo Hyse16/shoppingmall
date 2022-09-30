@@ -1,7 +1,10 @@
 package study.shoppingmall.domain;
 
+import lombok.AccessLevel;
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 import lombok.Setter;
+import org.aspectj.weaver.ast.Or;
 
 import javax.persistence.*;
 
@@ -9,11 +12,12 @@ import javax.persistence.*;
 @Table(name = "order_item")
 @Getter
 @Setter
+@NoArgsConstructor(access = AccessLevel.PROTECTED)
 public class OrderItem {
 
     @Id
     @GeneratedValue
-    @Column(name = "order_item_id")
+    @Column(name = "order_item_id   ")
     private Long id;
 
     @ManyToOne(fetch = FetchType.LAZY)
@@ -24,7 +28,32 @@ public class OrderItem {
     @JoinColumn(name = "order_id")
     private Order order;
 
+    private String size;
+
     private int orderPrice;
     private int count;
+
+    //생성 메서드
+    public static OrderItem createOrderItem(Item item, int orderPrice, int count, String size) {
+        OrderItem orderItem = new OrderItem();
+        orderItem.setItem(item);
+        orderItem.setOrderPrice(orderPrice);
+        orderItem.setCount(count);
+        orderItem.setSize(size);
+
+        item.removeStock(count);
+        return orderItem;
+    }
+
+
+
+    public void cancel() {
+        getItem().addStock(count);
+
+    }
+
+    public int getTotalPrice() {
+        return getOrderPrice() * getCount();
+    }
 }
 

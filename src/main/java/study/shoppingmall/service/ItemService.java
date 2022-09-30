@@ -24,8 +24,8 @@ public class ItemService {
         return itemRepository.findAll();
     }
 
-    public Item findOne(Long itemId) {
-        return itemRepository.getReferenceById(itemId);
+    public Item findOne(Long itemID) {
+        return itemRepository.findItemById(itemID);
     }
 
 }

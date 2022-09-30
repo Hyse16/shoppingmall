@@ -21,8 +21,6 @@ public class Item {
     private int price;
     private int stockQuantity;
 
-    @Enumerated
-    private ItemSizeStatus itemSizeStatus;
 
     // 재고수량 증가
     public void addStock(int quantity) {
