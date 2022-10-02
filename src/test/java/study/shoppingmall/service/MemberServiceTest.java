@@ -24,7 +24,6 @@ class MemberServiceTest {
     public void 회원가입() throws Exception {
         Member member = new Member();
         member.setName("kim");
-
         Long saveId = memberService.join(member);
         assertEquals(member,memberService.findOne(saveId));
     }

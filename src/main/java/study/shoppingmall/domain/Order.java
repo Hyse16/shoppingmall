@@ -4,16 +4,13 @@ import lombok.AccessLevel;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
-import org.aspectj.weaver.ast.Or;
-import org.springframework.web.bind.annotation.PutMapping;
-
 import javax.persistence.*;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 @Entity
-@Table(name = "order")
+@Table(name = "orders")
 @Getter
 @Setter
 public class Order {
@@ -34,10 +31,11 @@ public class Order {
     @JoinColumn(name = "member_id")
     private Member member;
 
+    private LocalDateTime orderDate;
+
     @Enumerated(EnumType.STRING)
     private OrderStatus status;
 
-    private LocalDateTime orderDate;
 
     public void setMember(Member member) {
         this.member = member;

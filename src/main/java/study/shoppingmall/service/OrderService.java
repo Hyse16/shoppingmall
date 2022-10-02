@@ -5,9 +5,9 @@ import org.springframework.context.annotation.Primary;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import study.shoppingmall.domain.*;
-import study.shoppingmall.repository.ItemRepository;
-import study.shoppingmall.repository.MemberRepository;
-import study.shoppingmall.repository.OrderRepository;
+import study.shoppingmall.repository.*;
+
+import java.util.Optional;
 
 @Service
 @Transactional(readOnly = true)
@@ -17,10 +17,12 @@ public class OrderService {
     private final MemberRepository memberRepository;
     private final ItemRepository itemRepository;
 
+
+
     @Transactional
     public Long order(Long memberId, Long itemId, int count, String size) {
-        Member member = memberRepository.findMemberById(memberId);
-        Item item = itemRepository.findItemById(itemId);
+        Member member = memberRepository.findById(memberId).orElseThrow(IllegalAccessError::new);
+        Item item = itemRepository.findById(itemId).orElseThrow(IllegalAccessError::new);
 
         Delivery delivery = new Delivery();
         delivery.setAddress(member.getAddress());
@@ -34,9 +36,10 @@ public class OrderService {
         return order.getId();
     }
 
+
     @Transactional
     public void cancelOrder(Long orderId) {
-        Order order = orderRepository.findOrderById(orderId);
+        Order order = orderRepository.findById(orderId).orElseThrow(IllegalAccessError::new);
         order.cancel();
 
     }

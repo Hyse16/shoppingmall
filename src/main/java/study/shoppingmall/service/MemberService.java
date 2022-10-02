@@ -1,8 +1,6 @@
 package study.shoppingmall.service;
 
-import lombok.AllArgsConstructor;
 import lombok.RequiredArgsConstructor;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import study.shoppingmall.domain.Member;
@@ -35,7 +33,7 @@ public class MemberService {
         return memberRepository.findAll();
     }
 
-    public Member findOne(Long memberId) {
-        return memberRepository.findMemberById(memberId);
+    public Optional<Member> findOne(Long memberId) {
+        return memberRepository.findById(memberId);
     }
 }

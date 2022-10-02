@@ -7,6 +7,7 @@ import study.shoppingmall.domain.Item;
 import study.shoppingmall.repository.ItemRepository;
 
 import java.util.List;
+import java.util.Optional;
 
 @Service
 @Transactional(readOnly = true)
@@ -14,6 +15,7 @@ import java.util.List;
 public class ItemService {
 
     private final ItemRepository itemRepository;
+
 
     @Transactional
     public void saveItem(Item item) {
@@ -24,8 +26,8 @@ public class ItemService {
         return itemRepository.findAll();
     }
 
-    public Item findOne(Long itemID) {
-        return itemRepository.findItemById(itemID);
+    public Optional<Item> findOne(Long itemID) {
+        return itemRepository.findById(itemID);
     }
 
 }
