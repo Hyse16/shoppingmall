@@ -1,12 +1,14 @@
 package study.shoppingmall.service;
 
 import lombok.RequiredArgsConstructor;
+import org.springframework.context.Lifecycle;
 import org.springframework.context.annotation.Primary;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import study.shoppingmall.domain.*;
 import study.shoppingmall.repository.*;
 
+import java.util.List;
 import java.util.Optional;
 
 @Service
@@ -31,7 +33,6 @@ public class OrderService {
         OrderItem orderItem = OrderItem.createOrderItem(item, item.getPrice(), count, size);
 
         Order order = Order.createOrder(member, delivery, orderItem);
-
         orderRepository.save(order);
         return order.getId();
     }
@@ -41,6 +42,10 @@ public class OrderService {
     public void cancelOrder(Long orderId) {
         Order order = orderRepository.findById(orderId).orElseThrow(IllegalAccessError::new);
         order.cancel();
+    }
 
+
+    public List<Order> findOrders(OrderSearch orderSearch) {
+        return orderRepository.findAll(orderSearch);
     }
 }

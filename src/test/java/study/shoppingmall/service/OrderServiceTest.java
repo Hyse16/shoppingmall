@@ -1,21 +1,25 @@
 package study.shoppingmall.service;
 
+import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.transaction.annotation.Transactional;
 import study.shoppingmall.domain.*;
 import study.shoppingmall.repository.OrderRepository;
+import study.shoppingmall.repository.OrderSearch;
 
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 
+import java.util.List;
+
+import static org.assertj.core.api.Assertions.*;
 import static org.junit.jupiter.api.Assertions.*;
 
 @SpringBootTest
 @Transactional
 class OrderServiceTest {
-
 
     @PersistenceContext
     EntityManager em;
@@ -90,4 +94,35 @@ class OrderServiceTest {
         orderService.order(member.getId(), item.getId(), orderCount,"S");
         //Then
     }
-}
+
+    @Test
+    public void searchTest() {
+        Member member1 = new Member();
+        member1.setName("member1");
+        Member member2 = new Member();
+        member1.setName("member2");
+
+        em.persist(member1);
+        em.persist(member2);
+
+
+        Order order1 = new Order();
+        order1.setMember(member1);
+        order1.setStatus(OrderStatus.CANCEL);
+
+        Order order2 = new Order();
+        order2.setMember(member2);
+        order2.setStatus(OrderStatus.ORDER);
+
+        em.persist(order1);
+        em.persist(order2);
+
+        OrderSearch orderSearch = new OrderSearch();
+        orderSearch.setOrderStatus(OrderStatus.CANCEL);
+        orderSearch.setMemberName("member1");
+
+        List<Order> result = orderRepository.findAll(orderSearch);
+
+        assertThat(result).extracting("MemberName").containsExactly("member1");
+
+    }}
