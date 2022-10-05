@@ -10,7 +10,7 @@ import study.shoppingmall.repository.*;
 
 import java.util.List;
 import java.util.Optional;
-
+/*
 @Service
 @Transactional(readOnly = true)
 @RequiredArgsConstructor
@@ -49,3 +49,4 @@ public class OrderService {
         return orderRepository.findAll(orderSearch);
     }
 }
+ */

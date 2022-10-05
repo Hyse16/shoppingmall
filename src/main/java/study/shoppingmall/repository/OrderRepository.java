@@ -8,6 +8,5 @@ import study.shoppingmall.domain.Order;
 import java.util.List;
 import java.util.Optional;
 
-public interface OrderRepository extends JpaRepository<Order, Long>, OrderRepositoryCustom {
-    public List<Order> findAll(OrderSearch orderSearch);
+public interface OrderRepository extends JpaRepository<Order, Long> {
 }
