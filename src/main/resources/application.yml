@@ -5,6 +5,7 @@ spring:
     username: root
     password: aa1237113
 
+
   jpa:
     hibernate:
       ddl-auto: create
@@ -12,6 +13,8 @@ spring:
       hibernate:
         show_sql: true
         format_sql: true
+
+
 
 logging.level:
   org.hibernate.SQL: debug

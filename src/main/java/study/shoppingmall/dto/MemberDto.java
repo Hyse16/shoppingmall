@@ -1,6 +1,7 @@
 package study.shoppingmall.dto;
 
 import lombok.Builder;
+import lombok.Data;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import org.aspectj.bridge.Message;
@@ -13,6 +14,7 @@ import javax.validation.constraints.NotEmpty;
 
 @NoArgsConstructor
 @Getter
+@Data
 public class MemberDto {
 
     @NotBlank(message = "이름은 필수 입력 값입니다.")

@@ -1,6 +1,10 @@
 package study.shoppingmall.service;
 
 import lombok.RequiredArgsConstructor;
+import org.springframework.security.core.userdetails.User;
+import org.springframework.security.core.userdetails.UserDetails;
+import org.springframework.security.core.userdetails.UserDetailsService;
+import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import study.shoppingmall.domain.Member;
@@ -10,13 +14,12 @@ import java.util.List;
 import java.util.Optional;
 
 @Service
-@Transactional(readOnly = true)
+@Transactional
 @RequiredArgsConstructor
-public class MemberService {
+public class MemberService implements UserDetailsService {
 
     private final MemberRepository memberRepository;
 
-    @Transactional
     public Member saveMember(Member member) {
         validateDuplicateMember(member);
 
@@ -30,11 +33,18 @@ public class MemberService {
         }
     }
 
-    public List<Member> findMembers() {
-        return memberRepository.findAll();
-    }
+    @Override
+    public UserDetails loadUserByUsername(String email) throws UsernameNotFoundException {
+        Member member = memberRepository.findByEmail(email);
 
-    public Optional<Member> findOne(Long memberId) {
-        return memberRepository.findById(memberId);
+        if (member == null) {
+            throw new UsernameNotFoundException(email);
+        }
+        return User.builder()
+                .username(member.getEmail())
+                .password(member.getPassword())
+                .roles(member.getRole().toString())
+                .build();
+
     }
 }

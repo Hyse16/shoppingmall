@@ -15,6 +15,8 @@ import study.shoppingmall.service.MemberService;
 import javax.persistence.PersistenceUnit;
 import javax.validation.Valid;
 
+import static study.shoppingmall.domain.Member.createMember;
+
 @RequiredArgsConstructor
 @RequestMapping("/members")
 @Controller
@@ -25,11 +27,11 @@ public class MemberController {
 
     @GetMapping(value = "/new")
     public String memberForm(Model model) {
-        model.addAttribute("memberFormDto", new MemberDto());
+        model.addAttribute("memberDto", new MemberDto());
         return "member/memberForm";
     }
 
-    @PostMapping(value = "/new")
+    @PostMapping(value = "new")
     public String memberForm(@Valid MemberDto memberDto, BindingResult bindingResult, Model model) {
         if (bindingResult.hasErrors()) {
             return "member/memberForm";
@@ -40,8 +42,23 @@ public class MemberController {
             memberService.saveMember(member);
         } catch (IllegalStateException e) {
             model.addAttribute("errorMessage", e.getMessage());
-            return "member/memberForm";
+            return "member/memberFOrm";
         }
-        return "direct:/";
+
+        return "redirect:/";
+    }
+
+
+    @GetMapping(value = "/login")
+    public String loginMember() {
+        return "/member/memberLoginForm";
+    }
+
+    @GetMapping(value = "/login/error")
+    public String loginError(Model model) {
+        model.addAttribute("loginErrorMsg", "아이디 또는 비밀번호를 확인해주세요.");
+        return "/member/memberLoginForm";
     }
 }
+
+
