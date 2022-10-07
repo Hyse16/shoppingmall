@@ -32,7 +32,6 @@ public class MemberService implements UserDetailsService {
             throw new IllegalStateException("이미 존재하는 회원");
         }
     }
-
     @Override
     public UserDetails loadUserByUsername(String email) throws UsernameNotFoundException {
         Member member = memberRepository.findByEmail(email);
@@ -40,6 +39,7 @@ public class MemberService implements UserDetailsService {
         if (member == null) {
             throw new UsernameNotFoundException(email);
         }
+
         return User.builder()
                 .username(member.getEmail())
                 .password(member.getPassword())
@@ -47,4 +47,6 @@ public class MemberService implements UserDetailsService {
                 .build();
 
     }
+
+
 }

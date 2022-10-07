@@ -31,7 +31,7 @@ public class Member {
 
     private String address;
 
-    @Embedded
+    @Enumerated(EnumType.STRING)
     private MemberRole role;
 
 
