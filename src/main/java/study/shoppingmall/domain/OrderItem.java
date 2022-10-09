@@ -1,9 +1,6 @@
 package study.shoppingmall.domain;
 
-import lombok.AccessLevel;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
+import lombok.*;
 import org.aspectj.weaver.ast.Or;
 
 import javax.persistence.*;
@@ -11,7 +8,6 @@ import javax.persistence.*;
 @Entity
 @Table(name = "order_item")
 @Getter
-@Setter
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 public class OrderItem {
 
@@ -21,39 +17,23 @@ public class OrderItem {
     private Long id;
 
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "item_id")
-    private Item item;
-
-    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "order_id")
     private Order order;
 
-    private String size;
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "item_id")
+    private Item item;
 
     private int orderPrice;
+
     private int count;
 
-    //생성 메서드
-    public static OrderItem createOrderItem(Item item, int orderPrice, int count, String size) {
-        OrderItem orderItem = new OrderItem();
-        orderItem.setItem(item);
-        orderItem.setOrderPrice(orderPrice);
-        orderItem.setCount(count);
-        orderItem.setSize(size);
-
-        item.removeStock(count);
-        return orderItem;
-    }
-
-
-
-    public void cancel() {
-        getItem().addStock(count);
-
-    }
-
-    public int getTotalPrice() {
-        return getOrderPrice() * getCount();
+    @Builder
+    public OrderItem(Item item, Order order, int orderPrice, int count) {
+        this.item = item;
+        this.order = order;
+        this.orderPrice = orderPrice;
+        this.count = count;
     }
 }
 
