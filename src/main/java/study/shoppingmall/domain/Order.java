@@ -23,13 +23,18 @@ public class Order {
     private Member member;
 
 
-    @OneToMany(mappedBy = "order")
-    private List<OrderItem> orderItems;
+    @OneToMany(mappedBy = "order",cascade = CascadeType.ALL,orphanRemoval = true)
+    private List<OrderItem> orderItems = new ArrayList<>();
 
 
     private LocalDateTime orderDate;
 
     @Enumerated
     private OrderStatus orderStatus;
+
+    @Builder
+    public Order(Member member) {
+        this.member = member;
+    }
 }
 

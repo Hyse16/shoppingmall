@@ -10,14 +10,13 @@ import java.util.List;
 import java.util.Optional;
 
 @Service
-@Transactional(readOnly = true)
+@Transactional
 @RequiredArgsConstructor
 public class ItemService {
 
     private final ItemRepository itemRepository;
 
 
-    @Transactional
     public void saveItem(Item item) {
         itemRepository.save(item);
     }
