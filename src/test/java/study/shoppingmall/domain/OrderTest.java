@@ -8,6 +8,7 @@ import org.springframework.test.annotation.Rollback;
 import org.springframework.transaction.annotation.Transactional;
 import study.shoppingmall.repository.ItemRepository;
 import study.shoppingmall.repository.MemberRepository;
+import study.shoppingmall.repository.OrderItemRepository;
 import study.shoppingmall.repository.OrderRepository;
 
 import javax.persistence.EntityManager;
@@ -104,5 +105,22 @@ class OrderTest {
         Order order = this.createOrder();
         order.getOrderItems().remove(0);
         em.flush();
+    }
+
+
+    @Autowired
+    OrderItemRepository orderItemRepository;
+
+    @Test
+    public void lazyLoadingTest() {
+        Order order = this.createOrder();
+        Long orderItemId= order.getOrderItems().get(0).getId();
+        em.flush();
+        em.clear();
+
+
+        OrderItem orderItem = orderItemRepository.findById(orderItemId)
+                .orElseThrow(EntityNotFoundException::new);
+        System.out.println("orderclass = " + orderItem.getOrder().getClass());
     }
 }

@@ -11,7 +11,7 @@ import java.util.List;
 @Table(name = "orders")
 @Getter
 @NoArgsConstructor
-public class Order {
+public class Order extends BaseEntity{
 
     @Id
     @GeneratedValue

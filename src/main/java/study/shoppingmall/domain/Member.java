@@ -15,7 +15,7 @@ import java.util.List;
 @Getter
 @NoArgsConstructor
 @Table(name = "member")
-public class Member {
+public class Member extends BaseEntity{
 
     @Id
     @GeneratedValue

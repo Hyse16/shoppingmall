@@ -9,7 +9,7 @@ import javax.persistence.*;
 @Table(name = "order_item")
 @Getter
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
-public class OrderItem {
+public class OrderItem extends BaseEntity{
 
     @Id
     @GeneratedValue

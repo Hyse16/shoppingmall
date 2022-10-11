@@ -8,7 +8,7 @@ import javax.persistence.*;
 @Entity
 @Getter
 @NoArgsConstructor
-public class Item {
+public class Item extends BaseEntity{
 
     @Id
     @GeneratedValue
