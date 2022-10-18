@@ -8,7 +8,6 @@ import lombok.ToString;
 import javax.persistence.*;
 
 @Getter
-@ToString
 @NoArgsConstructor
 @Entity
 public class ItemImg {
@@ -29,6 +28,7 @@ public class ItemImg {
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "item_id")
     private Item item;
+
 
     @Builder
     public ItemImg(String imageName, String oriImaName, String imgUrl, String repimgYn, Item item) {

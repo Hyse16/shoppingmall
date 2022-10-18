@@ -8,8 +8,6 @@ import study.shoppingmall.dto.ItemFormDto;
 @Controller
 public class ItemController {
 
-
-
     @GetMapping(value = "/admin/item/new")
     public String itemForm(Model model) {
         model.addAttribute("itemFormDto", new ItemFormDto());

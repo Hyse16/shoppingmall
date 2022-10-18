@@ -22,6 +22,7 @@ public class Item extends BaseEntity{
 
     private int stockQuantity;
 
+
     @Lob
     @Column(nullable = false)
     private String itemDetail;
