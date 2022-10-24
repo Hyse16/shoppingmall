@@ -1,7 +1,5 @@
 <!DOCTYPE html>
-<html xmlns:th="http://www.thymeleaf.org"
-      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
-      layout:decorate="~{layouts/default}">
+<html xmlns:th="http://www.thymeleaf.org">
 
 <!-- 사용자 스크립트 추가 -->
 <th:block layout:fragment="script">
@@ -43,7 +41,7 @@
     </style>
 </th:block>
 
-<div layout:fragment="content" class="content w-75 py-5 m-auto">
+<div layout:fragment="content" class="content w-100 py-15 m-auto">
     <form role="form" method="post" enctype="multipart/form-data" th:object="${itemFormDto}">
 
         <p class="h2">
@@ -79,7 +77,7 @@
             <div class="input-group-prepend">
                 <span class="input-group-text">재고</span>
             </div>
-            <input type="number" th:field="*{stockNumeber}" class="form-control" placeholder="상품의 재고를 입력해주세요">
+            <input type="number" th:field="*{stockNumber}" class="form-control" placeholder="상품의 재고를 입력해주세요">
         </div>
         <p th:if="${#fields.hasErrors('stockNumber')}" th:errors="*{stockNumber}" class="fieldError">Incorrect data</p>
 

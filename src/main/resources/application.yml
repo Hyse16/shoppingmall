@@ -4,7 +4,14 @@ spring:
     url: jdbc:mysql://localhost:3306/shopping?serverTimezone=UTC&characterEncoding=UTF-8
     username: root
     password: aa1237113
+  servlet:
+    multipart:
+      maxFileSize: 20MB
+      maxRequestSize: 100MB
 
+
+itemImgLocation: /Users/hyeonseung/Desktop/Project/item
+uploadPath: /Users/hyeonseung/Desktop/Project
 
   jpa:
     hibernate:
