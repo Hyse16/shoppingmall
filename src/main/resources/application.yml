@@ -5,18 +5,14 @@ spring:
     username: root
     password: aa1237113
   servlet:
-    multipart:
+  multipart:
       maxFileSize: 20MB
       maxRequestSize: 100MB
 
-
-itemImgLocation: /Users/hyeonseung/Desktop/Project/item
-uploadPath: /Users/hyeonseung/Desktop/Project
-
   jpa:
-    hibernate:
+   hibernate:
       ddl-auto: create
-    properties:
+   properties:
       hibernate:
         show_sql: true
         format_sql: true
@@ -26,3 +22,7 @@ uploadPath: /Users/hyeonseung/Desktop/Project
 logging.level:
   org.hibernate.SQL: debug
       #  org.hibernate.type: trace
+
+itemImgLocation: /Users/hyeonseung/Desktop/Project/
+uploadPath: /Users/hyeonseung/Desktop/Project/item
+
