@@ -37,9 +37,8 @@ public class ItemImgDto {
                 .repimgYn(dto.repImgYn)
                 .build();
 
-
     }
-    public ItemImgDto of(ItemImg entity) {
+    public static ItemImgDto of(ItemImg entity) {
 
         return ItemImgDto.builder()
                 .imgName(entity.getImageName())

@@ -54,7 +54,7 @@ public class ItemFormDto {
                 .build();
     }
 
-    public ItemFormDto of(Item entity) {
+    public static ItemFormDto of(Item entity) {
 
         return ItemFormDto.builder()
                 .itemNm(entity.getName())
