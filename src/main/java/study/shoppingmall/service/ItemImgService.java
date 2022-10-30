@@ -9,6 +9,8 @@ import org.springframework.web.multipart.MultipartFile;
 import study.shoppingmall.domain.ItemImg;
 import study.shoppingmall.repository.ItemImgRepository;
 
+import javax.persistence.EntityNotFoundException;
+
 @RequiredArgsConstructor
 @Transactional
 @Service
@@ -33,6 +35,23 @@ public class ItemImgService {
 
         itemImg.updateImg(oriImgName, imgName, imgUrl);
         itemImgRepository.save(itemImg);
+    }
+
+    public void updateItemImg(Long itemImgId, MultipartFile itemImgFile) throws Exception {
+
+        if (!itemImgFile.isEmpty()) {
+            ItemImg savedItemImg = itemImgRepository.findById(itemImgId).orElseThrow(EntityNotFoundException::new);
+
+            //기존 이미지 삭제
+            if (!StringUtils.hasText(savedItemImg.getImageName())) {
+                fileService.deleteFile(itemImgLocation + "/" + savedItemImg.getImageName());
+            }
+
+            String oriImgName = itemImgFile.getOriginalFilename();
+            String imgName = fileService.uploadFile(itemImgLocation, oriImgName, itemImgFile.getBytes());
+            String imgUrl = "/images/item/" + imgName;
+            savedItemImg.updateImg(oriImgName, imgName, imgUrl);
+        }
     }
 
 
