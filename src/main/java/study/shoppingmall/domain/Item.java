@@ -1,6 +1,7 @@
 package study.shoppingmall.domain;
 
 import lombok.*;
+import study.shoppingmall.dto.ItemFormDto;
 import study.shoppingmall.exception.NotEnoughStockException;
 
 import javax.persistence.*;
@@ -39,4 +40,14 @@ public class Item extends BaseEntity{
         this.itemStatus = itemStatus;
     }
 
+    public void updateItem(ItemFormDto itemFormDto) {
+        this.name = itemFormDto.getItemNm();
+        this.price = itemFormDto.getPrice();
+        this.stockQuantity = itemFormDto.getStockNumber();
+        this.itemDetail = itemFormDto.getItemDetail();
+        this.itemStatus = itemFormDto.getItemStatus();
+    }
+
 }
+
+
