@@ -1,6 +1,8 @@
 package study.shoppingmall.service;
 
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.multipart.MultipartFile;
@@ -8,6 +10,7 @@ import study.shoppingmall.domain.Item;
 import study.shoppingmall.domain.ItemImg;
 import study.shoppingmall.dto.ItemFormDto;
 import study.shoppingmall.dto.ItemImgDto;
+import study.shoppingmall.dto.ItemSearchDto;
 import study.shoppingmall.repository.ItemImgRepository;
 import study.shoppingmall.repository.ItemRepository;
 
@@ -73,4 +76,11 @@ public class ItemService {
 
         return item.getId();
     }
+
+    @Transactional(readOnly = true)
+    public Page<Item> getAdminItemPage(ItemSearchDto itemSearchDto, Pageable pageable){
+        return itemRepository.getAdminItemPage(itemSearchDto, pageable);
+    }
+
+
 }
