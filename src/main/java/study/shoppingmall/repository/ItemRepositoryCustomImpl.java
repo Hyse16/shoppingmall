@@ -9,7 +9,10 @@ import org.thymeleaf.util.StringUtils;
 import study.shoppingmall.domain.Item;
 import study.shoppingmall.domain.ItemStatus;
 import study.shoppingmall.domain.QItem;
+import study.shoppingmall.domain.QItemImg;
 import study.shoppingmall.dto.ItemSearchDto;
+import study.shoppingmall.dto.MainItemDto;
+import study.shoppingmall.dto.QMainItemDto;
 
 import javax.persistence.EntityManager;
 import java.time.LocalDateTime;
@@ -64,5 +67,42 @@ public class ItemRepositoryCustomImpl implements  ItemRepositoryCustom{
         long total = content.size();
         return new PageImpl<>(content, pageable, total);
     }
+    private BooleanExpression itemNmLike(String searchQuery) {
+        return StringUtils.isEmpty(searchQuery) ? null : QItem.item.name.like("%" + searchQuery + "%");
+    }
 
+    @Override
+    public Page<MainItemDto> getMainItemPage(ItemSearchDto itemSearchDto, Pageable pageable) {
+        QItem item = QItem.item;
+        QItemImg itemImg = QItemImg.itemImg;
+
+        List<MainItemDto> content = queryFactory
+                .select(
+                        new QMainItemDto(
+                                item.id,
+                                item.name,
+                                item.itemDetail,
+                                itemImg.imgUrl,
+                                item.price)
+                )
+                .from(itemImg)
+                .join(itemImg.item, item)
+                .where(itemImg.repimgYn.eq("Y"),
+                        itemNmLike(itemSearchDto.getSearchQuery()))
+                .orderBy(item.id.desc())
+                .offset(pageable.getOffset())
+                .limit(pageable.getPageSize())
+                .fetch();
+
+        Long total = queryFactory
+                .select(item.count())
+                .from(itemImg)
+                .join(itemImg.item, item)
+                .where(itemImg.repimgYn.eq("Y"),
+                        itemNmLike(itemSearchDto.getSearchQuery()))
+                .fetchOne();
+
+        return new PageImpl<>(content, pageable, total);
+
+    }
 }
