@@ -11,6 +11,7 @@ import study.shoppingmall.domain.ItemImg;
 import study.shoppingmall.dto.ItemFormDto;
 import study.shoppingmall.dto.ItemImgDto;
 import study.shoppingmall.dto.ItemSearchDto;
+import study.shoppingmall.dto.MainItemDto;
 import study.shoppingmall.repository.ItemImgRepository;
 import study.shoppingmall.repository.ItemRepository;
 
@@ -82,5 +83,8 @@ public class ItemService {
         return itemRepository.getAdminItemPage(itemSearchDto, pageable);
     }
 
-
+    @Transactional(readOnly = true)
+    public Page<MainItemDto> getMainItemPage(ItemSearchDto itemSearchDto, Pageable pageable) {
+        return itemRepository.getMainItemPage(itemSearchDto, pageable);
+    }
 }
